@@ -1,73 +1,160 @@
-# Welcome to your Lovable project
+# Elasticsearch Auto-Suggestions API with React UI
 
-## Project info
+A full-stack application that provides auto-suggestions and search functionality using Elasticsearch, FastAPI, and React. This project demonstrates how to build a scalable search solution with a modern web interface.
 
-**URL**: https://lovable.dev/projects/8afa3c1e-b875-4b4c-9eb9-411919b4b0b8
+## Features
 
-## How can I edit this code?
+- 🚀 FastAPI backend with Elasticsearch integration
+- ⚡ Real-time search suggestions
+- 🔍 Full-text search with highlighting
+- 📱 Responsive React UI with TypeScript
+- 🐳 Docker support for easy deployment
+- 🛠️ RESTful API endpoints for search and autocomplete
 
-There are several ways of editing your application.
+## Prerequisites
 
-**Use Lovable**
+- Docker and Docker Compose
+- Node.js (v16 or later)
+- Python 3.8+
+- Elasticsearch (included in Docker setup)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8afa3c1e-b875-4b4c-9eb9-411919b4b0b8) and start prompting.
+## Quick Start
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/elastic-search-hints-api.git
+   cd elastic-search-hints-api
+   ```
 
-**Use your preferred IDE**
+2. **Set up the environment**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **Start the services using Docker**
+   ```bash
+   docker-compose up -d
+   ```
+   This will start:
+   - Elasticsearch (port 9200)
+   - FastAPI backend (port 8000)
+   - React frontend (port 3000)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. **Access the application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8000
+   - Elasticsearch: http://localhost:9200
 
-Follow these steps:
+## Project Structure
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+elastic-search-hints-api/
+├── backend/                 # FastAPI application
+│   ├── main.py             # Main FastAPI application
+│   ├── requirements.txt    # Python dependencies
+│   └── Dockerfile
+├── frontend/               # React application
+│   ├── src/
+│   │   ├── components/    # React components
+│   │   ├── pages/         # Page components
+│   │   └── App.tsx        # Main React component
+│   └── package.json
+├── docker-compose.yml      # Docker Compose configuration
+└── README.md              # This file
 ```
 
-**Edit a file directly in GitHub**
+## API Endpoints
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Search
+- `GET /search?q=query&size=10` - Search documents
+- `GET /autocomplete?q=quer&size=5` - Get search suggestions
+- `GET /indices` - List all Elasticsearch indices
+- `GET /health` - Health check endpoint
 
-**Use GitHub Codespaces**
+## Development Setup
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Backend Setup
 
-## What technologies are used for this project?
+1. **Create and activate a virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+   ```
 
-This project is built with:
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+3. **Run the FastAPI server**
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
 
-## How can I deploy this project?
+### Frontend Setup
 
-Simply open [Lovable](https://lovable.dev/projects/8afa3c1e-b875-4b4c-9eb9-411919b4b0b8) and click on Share -> Publish.
+1. **Install dependencies**
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-## Can I connect a custom domain to my Lovable project?
+2. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-Yes, you can!
+## Environment Variables
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Create a `.env` file in the root directory with the following variables:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```env
+# Backend
+ELASTICSEARCH_HOST=localhost
+ELASTICSEARCH_PORT=9200
+
+# Frontend
+VITE_API_URL=http://localhost:8000
+```
+
+## Indexing Data
+
+To index sample data into Elasticsearch:
+
+```bash
+# Example using curl to index a document
+curl -X POST "http://localhost:8000/index" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "blue jeans for men", "query": "men's blue denim jeans"}'
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+👤 **Yogesh Joga**
+
+- GitHub: [@yogeshjoga](https://github.com/yogeshjoga)
+- LinkedIn: [Yogesh Joga](https://linkedin.com/in/yogeshjoga)
+
+## Acknowledgments
+
+- [Elasticsearch](https://www.elastic.co/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+---
+
+Made with ❤️ by Yogesh Joga
