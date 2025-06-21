@@ -2,6 +2,38 @@
 
 A full-stack application that provides auto-suggestions and search functionality using Elasticsearch, FastAPI, and React. This project demonstrates how to build a scalable search solution with a modern web interface.
 
+## 🎥 Application Flow
+
+Here's a visual walkthrough of the application flow:
+
+### 1. Docker Container with Elasticsearch Running
+![Docker Container](stock/docker_elastic_search.png)
+*Figure 1: Elasticsearch running in a Docker container*
+
+### 2. Elasticsearch Service Running
+![Elasticsearch Running](stock/Elastic_search_running.png)
+*Figure 2: Elasticsearch service up and running*
+
+### 3. Clothing Prompts in Elasticsearch
+![Clothing Database](stock/clothing_prompts_image.png)
+*Figure 3: Sample clothing prompts indexed in Elasticsearch*
+
+### 4. Frontend UI
+![Frontend UI](stock/frontend_home.png)
+*Figure 4: Clean and responsive React frontend interface*
+
+### 5. Auto-Suggestions in Action
+![Auto Suggestions](stock/auto_suggestions.png)
+*Figure 5: Real-time search suggestions as you type*
+
+### 6. Suggestion Selection
+![Suggestion Selected](stock/auto_suggestions_selected.png)
+*Figure 6: Selecting a suggestion from the dropdown*
+
+### 7. Search Results
+![Search Results](stock/after_search_auto_suggestions_final_results.png)
+*Figure 7: Final search results with matched content and highlights*
+
 ## Features
 
 - 🚀 FastAPI backend with Elasticsearch integration
