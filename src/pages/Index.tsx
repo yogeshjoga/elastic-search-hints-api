@@ -20,7 +20,13 @@ const Index = () => {
     }
     const data = await response.json();
     console.log('Search response:', data);
-    return data;
+    
+    // Transform the response to match the expected format
+    return {
+      hits: data.hits || [],
+      total: data.total || 0,
+      took: data.took || 0
+    };
   };
 
   // Use React Query for search
@@ -45,6 +51,7 @@ const Index = () => {
     setSelectedSuggestion(suggestion);
     setSearchQuery(suggestion);
     setShowResults(true);
+    // Trigger search immediately when suggestion is selected
     refetch();
   }, [refetch]);
 
@@ -96,6 +103,7 @@ const Index = () => {
                   onSearch={handleSearch}
                   onSuggestionSelect={handleSuggestionSelect}
                   placeholder="Search for clothing styles, colors, brands..."
+                  showSearchButton={false}
                 />
               </div>
             </div>
@@ -122,6 +130,7 @@ const Index = () => {
                   onSuggestionSelect={handleSuggestionSelect}
                   initialValue={searchQuery}
                   placeholder="Search for clothing styles, colors, brands..."
+                  showSearchButton={true}
                 />
               </div>
             </div>

@@ -8,13 +8,15 @@ interface SearchBarProps {
   onSuggestionSelect: (suggestion: string) => void;
   initialValue?: string;
   placeholder?: string;
+  showSearchButton?: boolean;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   onSuggestionSelect,
   initialValue = '',
-  placeholder = 'Search...'
+  placeholder = 'Search...',
+  showSearchButton = true,
 }) => {
   const [inputValue, setInputValue] = useState(initialValue);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -141,21 +143,32 @@ const SearchBar: React.FC<SearchBarProps> = ({
             onKeyDown={handleKeyDown}
             onFocus={() => inputValue.length >= 2 && setShowSuggestions(true)}
             placeholder={placeholder}
-            className="w-full pl-12 pr-12 py-4 text-lg bg-white/80 backdrop-blur-sm border-2 border-slate-200/60 rounded-2xl 
+            className={`w-full pl-12 ${showSearchButton ? 'pr-24' : 'pr-12'} py-4 text-lg bg-white/80 backdrop-blur-sm border-2 border-slate-200/60 rounded-2xl 
                      focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 
                      placeholder-slate-400 text-slate-900 transition-all duration-200
-                     hover:border-slate-300/80 hover:bg-white/90"
+                     hover:border-slate-300/80 hover:bg-white/90`}
           />
           
-          {inputValue && (
-            <button
-              type="button"
-              onClick={handleClear}
-              className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          )}
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+            {inputValue && (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="p-2 text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            )}
+            {showSearchButton && (
+              <button
+                type="submit"
+                className="ml-1 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                disabled={!inputValue.trim()}
+              >
+                Search
+              </button>
+            )}
+          </div>
         </div>
       </form>
 
