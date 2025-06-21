@@ -1,8 +1,7 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import SearchBar from '../components/SearchBar';
 import SearchResults from '../components/SearchResults';
-import { SearchResult } from '../types/search';
 import { useQuery } from '@tanstack/react-query';
 
 const Index = () => {
@@ -10,15 +9,18 @@ const Index = () => {
   const [selectedSuggestion, setSelectedSuggestion] = useState('');
   const [showResults, setShowResults] = useState(false);
 
-  // Search function
+  // Search function connecting to your Python backend
   const searchClothing = async (query: string): Promise<any> => {
     if (!query.trim()) return null;
     
+    console.log(`Searching for: ${query}`);
     const response = await fetch(`http://localhost:8000/search_by_prompt_or_query?q=${encodeURIComponent(query)}&size=20`);
     if (!response.ok) {
-      throw new Error('Search failed');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return response.json();
+    const data = await response.json();
+    console.log('Search response:', data);
+    return data;
   };
 
   // Use React Query for search
@@ -86,7 +88,7 @@ const Index = () => {
               </h1>
               <p className="text-xl text-slate-600 mb-12 leading-relaxed">
                 Search through our extensive collection of clothing with intelligent suggestions
-                and precise matching powered by advanced search technology.
+                and precise matching powered by Elasticsearch.
               </p>
               
               <div className="max-w-2xl mx-auto">
@@ -95,39 +97,6 @@ const Index = () => {
                   onSuggestionSelect={handleSuggestionSelect}
                   placeholder="Search for clothing styles, colors, brands..."
                 />
-              </div>
-
-              {/* Features */}
-              <div className="grid md:grid-cols-3 gap-8 mt-20">
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-slate-200/60">
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">Smart Search</h3>
-                  <p className="text-slate-600">Advanced search algorithms that understand your fashion preferences</p>
-                </div>
-                
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-slate-200/60">
-                  <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">Instant Results</h3>
-                  <p className="text-slate-600">Get relevant suggestions and results in real-time as you type</p>
-                </div>
-                
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-slate-200/60">
-                  <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">Match Scoring</h3>
-                  <p className="text-slate-600">See exactly how well each result matches your search criteria</p>
-                </div>
               </div>
             </div>
           </div>

@@ -10,11 +10,6 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-interface Suggestion {
-  text: string;
-  type: 'prompt' | 'query';
-}
-
 const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   onSuggestionSelect,
@@ -27,14 +22,18 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
-  // Fetch auto-suggestions
+  // Fetch auto-suggestions from your Python backend
   const fetchSuggestions = async (query: string) => {
     if (!query.trim() || query.length < 2) return [];
     
     try {
+      console.log(`Fetching suggestions for: ${query}`);
       const response = await fetch(`http://localhost:8000/autocomplete?q=${encodeURIComponent(query)}&size=8`);
-      if (!response.ok) throw new Error('Failed to fetch suggestions');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
+      console.log('Suggestions response:', data);
       return data.suggestions || [];
     } catch (error) {
       console.error('Suggestions fetch error:', error);
