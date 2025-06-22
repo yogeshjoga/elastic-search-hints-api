@@ -143,18 +143,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
             onKeyDown={handleKeyDown}
             onFocus={() => inputValue.length >= 2 && setShowSuggestions(true)}
             placeholder={placeholder}
-            className={`w-full pl-12 ${showSearchButton ? 'pr-24' : 'pr-12'} py-4 text-lg bg-white/80 backdrop-blur-sm border-2 border-slate-200/60 rounded-2xl 
+            className={`w-full pl-12 ${inputValue ? (showSearchButton ? 'pr-32' : 'pr-12') : (showSearchButton ? 'pr-24' : 'pr-12')} py-4 text-lg bg-white/80 backdrop-blur-sm border-2 border-slate-200/60 rounded-2xl 
                      focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 
                      placeholder-slate-400 text-slate-900 transition-all duration-200
                      hover:border-slate-300/80 hover:bg-white/90`}
           />
           
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
             {inputValue && (
               <button
                 type="button"
                 onClick={handleClear}
-                className="p-2 text-slate-400 hover:text-slate-600 transition-colors"
+                className="p-2 -mr-1 text-slate-400 hover:text-slate-600 transition-colors"
+                aria-label="Clear search"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -162,7 +163,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             {showSearchButton && (
               <button
                 type="submit"
-                className="ml-1 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
                 disabled={!inputValue.trim()}
               >
                 Search
